@@ -11,6 +11,7 @@ import org.yearup.models.Product;
 import org.yearup.service.CategoryService;
 import org.yearup.service.ProductService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 // add the annotations to make this a REST controller
@@ -40,6 +41,8 @@ public class CategoriesController
     public ResponseEntity<List<Category>> getAll()
     {
         var categories = categoryService.getAllCategories();
+        if (categories.isEmpty())
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         // find and return all categories
         return ResponseEntity.ok(categories);
     }
@@ -50,6 +53,7 @@ public class CategoriesController
     public ResponseEntity<Category> getById(@PathVariable int id)
     {
         var category =  categoryService.getById(id);
+        if(category == null) return ResponseEntity.notFound().build();
         // get the category by id
         return ResponseEntity.ok(category);
     }
@@ -59,6 +63,8 @@ public class CategoriesController
     @GetMapping("{categoryId}/products")
     public List<Product> getProductsById(@PathVariable int categoryId)
     {
+        var category = categoryService.getById(categoryId);
+        if(category == null) return new ArrayList<>();
         // get a list of product by categoryId
         return productService.listByCategoryId(categoryId);
     }
@@ -67,7 +73,7 @@ public class CategoriesController
     // add annotation to ensure that only an ADMIN can call this function
 
     @PostMapping
-    @PreAuthorize("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Category> addCategory(@RequestBody Category category)
     {
         var newCategory = categoryService.create(category);
@@ -80,7 +86,7 @@ public class CategoriesController
     // add annotation to ensure that only an ADMIN can call this function
 
     @PutMapping("{id}")
-    @PreAuthorize("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Category updateCategory(@PathVariable int id, @RequestBody Category category)
     {
 
@@ -92,7 +98,7 @@ public class CategoriesController
     // add annotation to call this method for a DELETE action - the url path must include the categoryId
     // add annotation to ensure that only an ADMIN can call this function
     @DeleteMapping("{id}")
-    @PreAuthorize("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteCategory(@PathVariable int id)
     {
         // delete the category by id and return status 204 No Content
