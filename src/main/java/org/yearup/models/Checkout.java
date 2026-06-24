@@ -32,9 +32,13 @@ public class Checkout {
     @Column(name = "state")
     private String state;
 
+    @Column(name = "total")
+    private String total;
+
 
     public Checkout() {}
-    public Checkout(int id, String firstName, String lastName, String email, String phoneNumber, String address, String city, String state) {
+
+    public Checkout(int id, String firstName, String lastName, String email, String phoneNumber, String address, String city, String state, String total) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -43,6 +47,7 @@ public class Checkout {
         this.address = address;
         this.city = city;
         this.state = state;
+        this.total = total;
     }
 
     public int getId() {
@@ -107,6 +112,14 @@ public class Checkout {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
     }
 }
 
