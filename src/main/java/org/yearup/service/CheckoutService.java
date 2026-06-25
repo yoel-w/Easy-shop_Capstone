@@ -13,8 +13,12 @@ public class CheckoutService {
         this.checkoutRepository = checkoutRepository;
     }
 
-    public Checkout getCheckout(long id) {
-
-    }
+//    public Checkout getCheckout(int userId) {
+//        Checkout order = new Checkout();
+//
+//
+//        return checkoutRepository.save(order);
+//
+//    }
 
 }

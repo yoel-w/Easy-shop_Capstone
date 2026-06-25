@@ -26,13 +26,13 @@ public class CheckoutController {
         this.userService = userService;
     }
 
-    @PostMapping
-    @PreAuthorize("isAuthernticated()")
-    public ResponseEntity<Checkout> addCheckout(Checkout checkout)
-    {
-
-        return ResponseEntity.status(HttpStatus.CREATED);
-    }
+//    @PostMapping
+//    @PreAuthorize("isAuthernticated()")
+//    public ResponseEntity<Checkout> addCheckout(Checkout checkout)
+//    {
+//
+//        return ResponseEntity.status(HttpStatus.CREATED);
+//    }
 
 
 
