@@ -12,7 +12,7 @@ import org.yearup.service.UserService;
 import java.security.Principal;
 
 @RestController
-@RequestMapping("profile")
+@RequestMapping("/profile")
 @CrossOrigin
 @PreAuthorize("isAuthenticated()")
 
