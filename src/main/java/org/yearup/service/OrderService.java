@@ -45,8 +45,8 @@ public OrderService(OrderRepository orderRepository, OrderLineItemRepository ord
         var profile = profileRepository.findById(userId).orElse(null);
         if (profile == null) return null;
 
-        var cartItems = shoppingCartRepository.findByUserId(userId);
-        if (cartItems == null || cartItems.isEmpty())
+        var shopping = shoppingCartRepository.findByUserId(userId);
+        if (shopping == null || shopping.isEmpty())
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cart is empty");
 
         var order = new Order();
@@ -61,13 +61,13 @@ public OrderService(OrderRepository orderRepository, OrderLineItemRepository ord
         Order savedOrder = orderRepository.save(order);
 
 
-        for (var cartItem : cartItems) {
-            Product product = productService.getById(cartItem.getProductId());
+        for (var shoppings : shopping) {
+            Product product = productService.getById(shoppings.getProductId());
             OrderLineItem orderLineItem = new OrderLineItem();
             orderLineItem.setOrderId(savedOrder.getOrderId());
             orderLineItem.setProductId(product.getProductId());
             orderLineItem.setSalesPrice(product.getPrice());
-            orderLineItem.setQuantity(cartItem.getQuantity());
+            orderLineItem.setQuantity(shoppings.getQuantity());
             orderLineItem.setDiscount(0);
 
             orderLineItemRepository.save(orderLineItem);
